@@ -18,6 +18,17 @@ class Book {
     let pdfURL : NSURL
     var isFavorite : Bool
     
+    var tags: [Tag]{
+        get{
+            return tagArray
+        }
+    }
+    
+    var authors : String{
+        get {
+            return author.joinWithSeparator(", ")
+        }
+    }
     
     // MARK: - Initializers
     init(title: String, author: [String], tags: [Tag], imageURL: NSURL, pdfURL: NSURL, isFavorite: Bool){
@@ -30,4 +41,15 @@ class Book {
         self.isFavorite = isFavorite
     }
     
+}
+
+// MARK: - Extensions
+
+extension Book : CustomStringConvertible {
+    
+    var description: String {
+        get{
+            return "<\(self.dynamicType): \(title)>"
+        }
+    }
 }
