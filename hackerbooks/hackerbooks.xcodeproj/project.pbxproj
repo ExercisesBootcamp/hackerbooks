@@ -12,6 +12,7 @@
 		AABC5C201D2C2D22000C3C12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AABC5C1E1D2C2D22000C3C12 /* LaunchScreen.storyboard */; };
 		AABC5C2B1D2C2D22000C3C12 /* hackerbooksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C2A1D2C2D22000C3C12 /* hackerbooksTests.swift */; };
 		AABC5C361D2C2D22000C3C12 /* hackerbooksUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C351D2C2D22000C3C12 /* hackerbooksUITests.swift */; };
+		AABC5C461D2C2E86000C3C12 /* book.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C451D2C2E86000C3C12 /* book.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		AABC5C311D2C2D22000C3C12 /* hackerbooksUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hackerbooksUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AABC5C351D2C2D22000C3C12 /* hackerbooksUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hackerbooksUITests.swift; sourceTree = "<group>"; };
 		AABC5C371D2C2D22000C3C12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AABC5C451D2C2E86000C3C12 /* book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = book.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,10 +95,7 @@
 		AABC5C141D2C2D22000C3C12 /* hackerbooks */ = {
 			isa = PBXGroup;
 			children = (
-				AABC5C151D2C2D22000C3C12 /* AppDelegate.swift */,
-				AABC5C1C1D2C2D22000C3C12 /* Assets.xcassets */,
-				AABC5C1E1D2C2D22000C3C12 /* LaunchScreen.storyboard */,
-				AABC5C211D2C2D22000C3C12 /* Info.plist */,
+				AABC5C431D2C2E32000C3C12 /* App */,
 			);
 			path = hackerbooks;
 			sourceTree = "<group>";
@@ -117,6 +116,26 @@
 				AABC5C371D2C2D22000C3C12 /* Info.plist */,
 			);
 			path = hackerbooksUITests;
+			sourceTree = "<group>";
+		};
+		AABC5C431D2C2E32000C3C12 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				AABC5C441D2C2E6C000C3C12 /* Models */,
+				AABC5C151D2C2D22000C3C12 /* AppDelegate.swift */,
+				AABC5C1C1D2C2D22000C3C12 /* Assets.xcassets */,
+				AABC5C1E1D2C2D22000C3C12 /* LaunchScreen.storyboard */,
+				AABC5C211D2C2D22000C3C12 /* Info.plist */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		AABC5C441D2C2E6C000C3C12 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AABC5C451D2C2E86000C3C12 /* book.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AABC5C461D2C2E86000C3C12 /* book.swift in Sources */,
 				AABC5C161D2C2D22000C3C12 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
