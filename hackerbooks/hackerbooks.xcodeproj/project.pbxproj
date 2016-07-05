@@ -14,6 +14,7 @@
 		AABC5C361D2C2D22000C3C12 /* hackerbooksUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C351D2C2D22000C3C12 /* hackerbooksUITests.swift */; };
 		AABC5C461D2C2E86000C3C12 /* book.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C451D2C2E86000C3C12 /* book.swift */; };
 		AABC5C481D2C3064000C3C12 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C471D2C3064000C3C12 /* Tag.swift */; };
+		AABC5C4A1D2C33CA000C3C12 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C491D2C33CA000C3C12 /* Errors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		AABC5C371D2C2D22000C3C12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AABC5C451D2C2E86000C3C12 /* book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = book.swift; sourceTree = "<group>"; };
 		AABC5C471D2C3064000C3C12 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		AABC5C491D2C33CA000C3C12 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 			children = (
 				AABC5C451D2C2E86000C3C12 /* book.swift */,
 				AABC5C471D2C3064000C3C12 /* Tag.swift */,
+				AABC5C491D2C33CA000C3C12 /* Errors.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AABC5C4A1D2C33CA000C3C12 /* Errors.swift in Sources */,
 				AABC5C481D2C3064000C3C12 /* Tag.swift in Sources */,
 				AABC5C461D2C2E86000C3C12 /* book.swift in Sources */,
 				AABC5C161D2C2D22000C3C12 /* AppDelegate.swift in Sources */,
