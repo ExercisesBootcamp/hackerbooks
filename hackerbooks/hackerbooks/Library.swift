@@ -54,6 +54,8 @@ class Library : NSObject {
         subscribeNotificationModel()
     }
     
+    // MARK: - Counters
+    
     var booksCount: Int{
         get{
             return books.count
