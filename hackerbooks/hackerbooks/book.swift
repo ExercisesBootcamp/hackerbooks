@@ -41,6 +41,11 @@ class Book {
         self.isFavorite = isFavorite
     }
     
+    convenience init(book c: Book){
+        
+        self.init(title: c.title, author: c.author, tags: c.tags, imageURL: c.imageURL, pdfURL: c.pdfURL, isFavorite: c.isFavorite)
+    }
+    
 }
 
 // MARK: - Extensions
