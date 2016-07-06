@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Model instance
-        let model = Book(title: "Pro Git", author: ["Scott Chacon", "Ben Straub"], tags: [Tag(name: "version control"), Tag(name: "git")], imageURL: NSURL(string: "http://hackershelf.com/media/cache/b4/24/b42409de128aa7f1c9abbbfa549914de.jpg")!, pdfURL: NSURL(string: "https://progit2.s3.amaxonaws.com/en/2015-03-06-439c2/progit-en.376.pdf")!, isFavorite: false)
+        let model = Book(title: "Pro Git", author: ["Scott Chacon", "Ben Straub"], tags: [Tag(name: "version control"), Tag(name: "git")], imageURL: NSURL(string: "http://hackershelf.com/media/cache/b4/24/b42409de128aa7f1c9abbbfa549914de.jpg")!, pdfURL: NSURL(string: "https://progit2.s3.amazonaws.com/en/2015-03-06-439c2/progit-en.376.pdf")!, isFavorite: false)
         
         // New window
         window = UIWindow(frame: UIScreen.mainScreen().bounds)

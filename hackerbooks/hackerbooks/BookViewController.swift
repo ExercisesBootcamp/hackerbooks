@@ -63,7 +63,13 @@ class BookViewController: UIViewController {
     }
     
     @IBAction func displayPDF(sender: AnyObject) {
-    
+        
+        // Create a PDF VC
+        let pdfVC = PDFViewController(model: model)
+        
+        // Make a push
+        navigationController?.pushViewController(pdfVC, animated: true)
+        
     }
     
     
