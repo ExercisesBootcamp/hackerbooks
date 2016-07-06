@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA279B301D2D567A00ABC4DC /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA279B2E1D2D567A00ABC4DC /* BookViewController.swift */; };
+		AA279B311D2D567A00ABC4DC /* BookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA279B2F1D2D567A00ABC4DC /* BookViewController.xib */; };
 		AABC5C161D2C2D22000C3C12 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C151D2C2D22000C3C12 /* AppDelegate.swift */; };
 		AABC5C1D1D2C2D22000C3C12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AABC5C1C1D2C2D22000C3C12 /* Assets.xcassets */; };
 		AABC5C201D2C2D22000C3C12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AABC5C1E1D2C2D22000C3C12 /* LaunchScreen.storyboard */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA279B2E1D2D567A00ABC4DC /* BookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
+		AA279B2F1D2D567A00ABC4DC /* BookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookViewController.xib; sourceTree = "<group>"; };
 		AABC5C121D2C2D21000C3C12 /* hackerbooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hackerbooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AABC5C151D2C2D22000C3C12 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AABC5C1C1D2C2D22000C3C12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -80,6 +84,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA279B2D1D2D559500ABC4DC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AA279B2E1D2D567A00ABC4DC /* BookViewController.swift */,
+				AA279B2F1D2D567A00ABC4DC /* BookViewController.xib */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		AABC5C091D2C2D21000C3C12 = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +142,7 @@
 		AABC5C431D2C2E32000C3C12 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				AA279B2D1D2D559500ABC4DC /* Controllers */,
 				AABC5C441D2C2E6C000C3C12 /* Models */,
 				AABC5C151D2C2D22000C3C12 /* AppDelegate.swift */,
 				AABC5C1C1D2C2D22000C3C12 /* Assets.xcassets */,
@@ -256,6 +270,7 @@
 			files = (
 				AABC5C201D2C2D22000C3C12 /* LaunchScreen.storyboard in Resources */,
 				AABC5C1D1D2C2D22000C3C12 /* Assets.xcassets in Resources */,
+				AA279B311D2D567A00ABC4DC /* BookViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +298,7 @@
 				AABC5C4A1D2C33CA000C3C12 /* Errors.swift in Sources */,
 				AABC5C481D2C3064000C3C12 /* Tag.swift in Sources */,
 				AABC5C461D2C2E86000C3C12 /* book.swift in Sources */,
+				AA279B301D2D567A00ABC4DC /* BookViewController.swift in Sources */,
 				AABC5C161D2C2D22000C3C12 /* AppDelegate.swift in Sources */,
 				AABC5C4C1D2C3453000C3C12 /* JSONProcessing.swift in Sources */,
 				AABC5C4E1D2C3FD7000C3C12 /* Library.swift in Sources */,
@@ -502,6 +518,7 @@
 				AABC5C3C1D2C2D22000C3C12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AABC5C3D1D2C2D22000C3C12 /* Build configuration list for PBXNativeTarget "hackerbooksTests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +527,7 @@
 				AABC5C3F1D2C2D22000C3C12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AABC5C401D2C2D22000C3C12 /* Build configuration list for PBXNativeTarget "hackerbooksUITests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +536,7 @@
 				AABC5C421D2C2D22000C3C12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

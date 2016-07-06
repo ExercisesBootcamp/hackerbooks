@@ -16,6 +16,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Model instance
+        let model = Book(title: "Pro Git", author: ["Scott Chacon", "Ben Straub"], tags: [], imageURL: NSURL(string: "https://hackershelf.com/media/cache/b4/24/b42409de128aa7f1c9abbbfa549914de.jpg")!, pdfURL: NSURL(string: "https://progit2.s3.amaxonaws.com/en/2015-03-06-439c2/progit-en.376.pdf")!, isFavorite: false)
+        
+        // New window
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
+        // VC
+        let vc = BookViewController(model: model)
+        
+        // Insert in a navigation
+        let nav = UINavigationController(rootViewController: vc)
+        
+        // nav as root
+        window?.rootViewController = nav
+        
+        // visible and key
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
