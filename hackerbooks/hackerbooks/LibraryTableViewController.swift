@@ -9,7 +9,23 @@
 import UIKit
 
 class LibraryTableViewController: UITableViewController {
+    
+    // MARK: - Properties
+    
+    let model : Library?
 
+    // MARK: - Initialization
+    init(model: Library){
+        self.model = model
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,23 +44,56 @@ class LibraryTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        // Number of Tags
+        if let countTags = model?.tagsCount{
+            return countTags
+        }
         return 0
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        // Number of books in tag
+        if let tag = model?.tagAtIndex(section){
+            return model!.booksInTag(tag.name)
+        }
+        
         return 0
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cellId = "LibraryCell"
+        
+        //let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
-        // Configure the cell...
-
-        return cell
+        let selTag = model?.tagAtIndex(indexPath.section)
+        let selBook = model?.bookAtIndex(indexPath.row, tag: selTag!)
+        
+        // Cell
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
+        
+        if cell == nil{
+            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellId)
+        }
+        
+        // Sync book into cell
+        
+        let url = selBook?.imageURL
+        let data = NSData(contentsOfURL: url!)
+        
+        cell?.imageView?.image = UIImage(data: data!)
+        cell?.textLabel?.text = selBook?.title
+        cell?.detailTextLabel?.text = selBook?.authors
+        
+        return cell!
     }
-    */
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let selTag = model?.tagAtIndex(section){
+            return selTag.name
+        }
+        
+        return nil
+    }
 
 }

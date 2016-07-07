@@ -13,18 +13,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    var model : Library?
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
         // Model instance
-        let model = Book(title: "Pro Git", author: ["Scott Chacon", "Ben Straub"], tags: [Tag(name: "version control"), Tag(name: "git")], imageURL: NSURL(string: "http://hackershelf.com/media/cache/b4/24/b42409de128aa7f1c9abbbfa549914de.jpg")!, pdfURL: NSURL(string: "https://progit2.s3.amazonaws.com/en/2015-03-06-439c2/progit-en.376.pdf")!, isFavorite: false)
+        func decodeJSON() ->[Book]?{
+            
+            var result : [Book]? = nil
+            // Obtener la url del fichero
+            // Leemos el fichero JSON a un NSDATA (esto puede salir mal)
+            // Lo parseamos
+            do{
+                let documents = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+                let writePath = documents.stringByAppendingString("/books_readable.json")
+                
+                let firstLaunch = !NSUserDefaults.standardUserDefaults().boolForKey("FirstLaunch")
+                let fileExist = NSFileManager.defaultManager().fileExistsAtPath(writePath)
+                if firstLaunch {
+                    if let url = NSURL(string: "https://t.co/K9ziV0z3SJ"),
+                        data = NSData(contentsOfURL: url),
+                        booksArray = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONArray{
+                                saveData(data)
+                        // Todo es fabuloso!!!
+                        result = decode(books: booksArray)
+                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FirstLaunch")
+                    }
+                }
+                else if fileExist {
+                    result = try loadJSONLocally()
+                }else{
+                    NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FirstLaunch")
+                }
+            }catch{
+                // Error al parsear el JSON
+                fatalError()
+            }
+            
+            return result;
+            
+        }
+        
+        if let books = decodeJSON(){
+            var uniqueTags = [Tag]()
+            for book in books{
+                for tag in book.tags{
+                    if !uniqueTags.contains(tag){
+                        uniqueTags.append(tag)
+                    }
+                }
+            }
+            model = Library(booksArray: books, tagArray: uniqueTags)
+        }else{
+            fatalError("Everything goes wrong")
+        }
         
         // New window
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         // VC
-        let vc = BookViewController(model: model)
+        let vc = LibraryTableViewController(model: model!)
         
         // Insert in a navigation
         let nav = UINavigationController(rootViewController: vc)
@@ -35,7 +84,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // visible and key
         window?.makeKeyAndVisible()
         
+        // MARK: - Utils
+        
+        func saveData(data: NSData){
+            let documents = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+            let writePath = NSURL(fileURLWithPath: documents).URLByAppendingPathComponent("books_readable.json")
+            data.writeToURL(writePath, atomically: false)
+        }
+        
+        func loadJSONLocally() throws -> [Book]?{
+            do{
+                let documents = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+                let writePath = NSURL(fileURLWithPath: documents).URLByAppendingPathComponent("books_readable.json")
+                if let data = NSData(contentsOfURL: writePath),
+                    booksArray = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONArray{
+                    // Todo es fabuloso!!!
+                    return decode(books: booksArray)
+                }
+            }catch{
+                fatalError()
+            }
+            
+            
+            return nil
+        }
+        
         return true
+        
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {
