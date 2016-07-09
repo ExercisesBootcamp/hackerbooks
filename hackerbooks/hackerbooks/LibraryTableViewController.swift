@@ -13,6 +13,7 @@ class LibraryTableViewController: UITableViewController {
     // MARK: - Properties
     
     let model : Library?
+    var delegate : LibraryTableViewControllerDelegate?
 
     // MARK: - Initialization
     init(model: Library){
@@ -95,5 +96,22 @@ class LibraryTableViewController: UITableViewController {
         
         return nil
     }
+    
+    // MARK: - TableView delegate
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let selTag = model?.tagAtIndex(indexPath.section)
+        let selBook = model?.bookAtIndex(indexPath.row, tag: selTag!)
+        
+        // Warn delegae
+        delegate?.libraryTableViewController(self, didSelectBook: selBook!)
+        
+        
+    }
 
+}
+
+protocol LibraryTableViewControllerDelegate {
+    func libraryTableViewController(vc: LibraryTableViewController, didSelectBook book: Book)
 }

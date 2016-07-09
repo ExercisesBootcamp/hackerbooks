@@ -11,7 +11,7 @@ import Foundation
 class Tag : Hashable, Comparable {
     
     // MARK: - Properties
-    private var _name: String? = nil
+    var _name: String? = nil
     var name : String {
         set {
             self._name = newValue

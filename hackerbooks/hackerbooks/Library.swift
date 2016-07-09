@@ -12,9 +12,9 @@ class Library : NSObject {
     
     // MARK: - Properties
     
-    private var books : [Book]
-    private var tagArray : [Tag]?
-    private var tags : [Tag]? {
+    var books : [Book]
+    var tagArray : [Tag]?
+    var tags : [Tag]? {
         get{
             if let tArray = tagArray{
                 

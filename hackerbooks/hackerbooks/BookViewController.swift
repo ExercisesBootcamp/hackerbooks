@@ -16,7 +16,7 @@ class BookViewController: UIViewController {
     @IBOutlet weak var authorsField: UITextField!
     @IBOutlet var tagsField: UITextField!
     
-    let model : Book
+    var model : Book
     
     // MARK: - Initialization
     
@@ -95,4 +95,18 @@ class BookViewController: UIViewController {
         super.viewDidAppear(animated)
     }
 
+}
+
+extension BookViewController : LibraryTableViewControllerDelegate {
+    
+    func libraryTableViewController(vc: LibraryTableViewController, didSelectBook book: Book) {
+        
+        // Updating model
+        model = book
+        
+        // Sync
+        syncModelWithView()
+        
+    }
+    
 }

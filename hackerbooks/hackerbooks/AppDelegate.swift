@@ -18,7 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        // New window
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
         // Model instance
+        
         func decodeJSON() ->[Book]?{
             
             var result : [Book]? = nil
@@ -69,17 +73,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             fatalError("Everything goes wrong")
         }
         
-        // New window
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        // Library VC
+        let libraryVC = LibraryTableViewController(model:model!)
         
-        // VC
-        let vc = LibraryTableViewController(model: model!)
+        // Library Navigation
+        let libraryNav = UINavigationController(rootViewController: libraryVC)
         
-        // Insert in a navigation
-        let nav = UINavigationController(rootViewController: vc)
+        // Book VC
+        let bookVC = BookViewController(model: (model?.bookAtIndex(0, tag: (model?.tagAtIndex(0))!))!)
         
-        // nav as root
-        window?.rootViewController = nav
+        // Auxiliar navigation
+        let bookNav = UINavigationController(rootViewController: bookVC)
+        
+        // Split View Controller
+        let splitVC = UISplitViewController()
+        splitVC.viewControllers = [libraryNav, bookNav]
+        
+        // split as root
+        window?.rootViewController = splitVC
+        
+        // Delegates
+        libraryVC.delegate = bookVC
         
         // visible and key
         window?.makeKeyAndVisible()
@@ -110,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return true
-        
+
         
     }
 
