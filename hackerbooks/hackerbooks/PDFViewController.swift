@@ -42,10 +42,14 @@ class PDFViewController: UIViewController, UIWebViewDelegate {
         if pdf == nil{
             let url = model.pdfURL
             let data = NSData(contentsOfURL: url)
-            savePDF(data!, path: pdfURL)
-            pdfBrowser.loadData(data!, MIMEType: "application/pdf", textEncodingName: "utf-8", baseURL: url)
+            if data == nil {
+                pdfBrowser.loadHTMLString("NO DATA LOADED", baseURL: NSURL())
+            } else {
+                savePDF(data!, path: pdfURL)
+                pdfBrowser.loadData(data!, MIMEType: "application/pdf", textEncodingName: "utf-8", baseURL: url)
             
-            print("pdf saved")
+                print("pdf saved")
+            }
         } else {
             pdfBrowser.loadData(pdf!, MIMEType: "application/pdf", textEncodingName: "utf-8", baseURL: NSURL())
             
