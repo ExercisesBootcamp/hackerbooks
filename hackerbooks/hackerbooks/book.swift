@@ -13,23 +13,10 @@ class Book {
     // MARK: - Properties
     let title : String
     let author : [String]
-    private var tagArray : [Tag]
+    var tagArray : [Tag]
     let imageURL : NSURL
     let pdfURL : NSURL
-    var isFavorite : Bool {
-        didSet{
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)){
-                () -> Void in
-                if self.isFavorite{
-                    self.tagArray.insert(Tag(name: "Favorite"), atIndex: 0)
-                } else {
-                    self.tagArray.removeAtIndex(0)
-                }
-                
-                NSNotificationCenter.defaultCenter().postNotificationName("FavoriteChanged", object: self)
-            }
-        }
-    }
+    var isFavorite : Bool = false
     
     var tags: [Tag]{
         get{

@@ -45,13 +45,14 @@ class Library : NSObject {
         }
     }
     
+    
+    
     // MARK: - Initializers
     
     init(booksArray: [Book], tagArray: [Tag]){
         books = booksArray
         super.init()
         tags = tagArray
-        subscribeNotificationModel()
     }
     
     // MARK: - Counters
@@ -107,33 +108,6 @@ class Library : NSObject {
         return nil
     }
     
-    // MARK: - Notifications
-    
-    func subscribeNotificationModel(){
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Library.favoriteChanged(_:)), name: "FavoriteChanged", object: nil)
-    }
-    
-    func unsubscribeNotificationModel(){
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    // Adding or removing book from favorite tag
-    
-    func favoriteChanged(notification: NSNotification){
-        let book = notification.object as? Book
-        
-        if let fav = book?.isFavorite{
-            if fav{
-                tagArray?.insert(Tag(name: "Favorite"), atIndex: 0)
-            } else {
-                tagArray?.removeAtIndex(0)
-            }
-        }
-    }
-    
-    deinit {
-        unsubscribeNotificationModel()
-    }
     
     // MARK: - Loading JSON
     func decodeJSON() ->[Book]?{

@@ -8,6 +8,10 @@
 
 import UIKit
 
+let isNotFavorite = "Remove from favorite"
+let isFav = "Add to favorite"
+let favoriteKey = "Key"
+
 class BookViewController: UIViewController {
     
     // MARK: - Properties
@@ -47,8 +51,6 @@ class BookViewController: UIViewController {
             tagsField.text = tags
         }
         
-    
-        
     }
     
     
@@ -58,8 +60,28 @@ class BookViewController: UIViewController {
     }
     
     // MARK: - Actions
-    @IBAction func markFavorite(sender: AnyObject) {
+
+    // MARK: - Favourites functions
     
+    
+    @IBAction func markFav(sender: AnyObject) {
+        
+        if model.isFavorite == true {
+            model.isFavorite = false
+            
+            let nc = NSNotificationCenter.defaultCenter()
+            let notif = NSNotification(name: isNotFavorite, object: self, userInfo: [favoriteKey:model])
+            nc.postNotification(notif)
+            
+        }else{
+            model.isFavorite = true
+            
+            let nc = NSNotificationCenter.defaultCenter()
+            let notif = NSNotification(name: isFav, object: self, userInfo: [favoriteKey:model])
+            nc.postNotification(notif)
+        }
+        
+        print(model.isFavorite)
     }
     
     @IBAction func displayPDF(sender: AnyObject) {
@@ -94,6 +116,7 @@ class BookViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
     }
+    
 
 }
 

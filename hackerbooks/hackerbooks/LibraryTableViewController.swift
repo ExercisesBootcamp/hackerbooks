@@ -8,6 +8,9 @@
 
 import UIKit
 
+let BookDidChangeNotification = "Selected book did change"
+let BookKey = "key"
+
 class LibraryTableViewController: UITableViewController {
     
     // MARK: - Properties
@@ -26,6 +29,24 @@ class LibraryTableViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let center = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: #selector(toFavorite), name: isFav, object: nil)
+        center.addObserver(self, selector: #selector(outOfFavorite), name: isNotFavorite, object: nil)
+        
+        self.tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        let center = NSNotificationCenter.defaultCenter()
+        center.removeObserver(self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,14 +125,54 @@ class LibraryTableViewController: UITableViewController {
         let selTag = model?.tagAtIndex(indexPath.section)
         let selBook = model?.bookAtIndex(indexPath.row, tag: selTag!)
         
-        // Warn delegae
+        // Warn delegate
         delegate?.libraryTableViewController(self, didSelectBook: selBook!)
+        
+        // Same warning through notification
+        let nc = NSNotificationCenter.defaultCenter()
+        let notif = NSNotification(name: BookDidChangeNotification, object: self, userInfo: [BookKey: selBook!])
+        nc.postNotification(notif)
         
         
     }
+    
+    // MARK: - Notification Utils
+    
+    func toFavorite(notification: NSNotification){
+        
+        let info = notification.userInfo!
+        let book = info[favoriteKey] as? Book
+        
+        if ((model?.tags?.contains(Tag(name: "Favorite"))) == nil){
+            book?.tagArray.append(Tag(name:"Favorite"))
+            
+        }else{
+            model?.tagArray?.append(Tag(name: "Favorite"))
+            book?.tagArray.append(Tag(name:"Favorite"))
+        }
+        
+        self.tableView.reloadData()
+        
+    }
+    
+    func outOfFavorite(notification: NSNotification){
+        
+        let info = notification.userInfo!
+        let book = info[favoriteKey] as? Book
+        
+        if ((book?.tagArray.contains(Tag(name: "Favorite"))) != nil){
+            book?.tagArray.removeLast()
+            model?.tagArray?.removeLast()
+        }
+        
+        
+        self.tableView.reloadData()
+    }
+    
 
 }
 
 protocol LibraryTableViewControllerDelegate {
+    
     func libraryTableViewController(vc: LibraryTableViewController, didSelectBook book: Book)
 }

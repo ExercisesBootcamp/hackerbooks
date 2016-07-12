@@ -51,7 +51,35 @@ class PDFViewController: UIViewController, UIWebViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Notification subscription
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserver(self, selector: #selector(bookDidChange), name: BookDidChangeNotification, object: nil)
+        
         syncModelWithView()
+    }
+    
+    func bookDidChange(notification: NSNotification) {
+        
+        // Bring out userInfo
+        let info = notification.userInfo
+        
+        // Bring out book
+        let book = info![BookKey] as? Book
+        
+        // Update model
+        model = book!
+        
+        // Sync view
+        syncModelWithView()
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Unsubscribe from notification
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.removeObserver(self)
     }
     
     
