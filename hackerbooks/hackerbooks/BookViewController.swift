@@ -32,10 +32,27 @@ class BookViewController: UIViewController {
     
     func syncModelWithView(){
         
-        // PDF Image
-        let url = model.imageURL
-        let data = NSData(contentsOfURL: url)
-        pdfImage.image = UIImage(data: data!)
+        let imgUrl = localFile(model.title)
+        let img = loadLocalImage(imgUrl)
+        
+        if img == nil {
+            
+            // PDF Image
+            let url = model.imageURL
+            let data = NSData(contentsOfURL: url)
+            let image = UIImage(data: data!)
+            saveImage(image!, path: imgUrl)
+            pdfImage.image = image
+            
+            print("Saved pdf image")
+            
+        } else {
+            pdfImage.image = img
+            
+            print("Loaded pdf from local")
+        }
+        
+       
         
         // Book Title
         title = model.title
@@ -76,12 +93,12 @@ class BookViewController: UIViewController {
         }else{
             model.isFavorite = true
             
+            
             let nc = NSNotificationCenter.defaultCenter()
             let notif = NSNotification(name: isFav, object: self, userInfo: [favoriteKey:model])
             nc.postNotification(notif)
         }
         
-        print(model.isFavorite)
     }
     
     @IBAction func displayPDF(sender: AnyObject) {

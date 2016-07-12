@@ -36,9 +36,23 @@ class PDFViewController: UIViewController, UIWebViewDelegate {
         activityView.startAnimating()
         
         // Getting PDF
-        let url = model.pdfURL
-        let data = NSData(contentsOfURL: url)
-        pdfBrowser.loadData(data!, MIMEType: "application/pdf", textEncodingName: "utf-8", baseURL: url)
+        let pdfURL = localFile(model.authors)
+        let pdf = loadLocalPDF(pdfURL)
+        
+        if pdf == nil{
+            let url = model.pdfURL
+            let data = NSData(contentsOfURL: url)
+            savePDF(data!, path: pdfURL)
+            pdfBrowser.loadData(data!, MIMEType: "application/pdf", textEncodingName: "utf-8", baseURL: url)
+            
+            print("pdf saved")
+        } else {
+            pdfBrowser.loadData(pdf!, MIMEType: "application/pdf", textEncodingName: "utf-8", baseURL: NSURL())
+            
+            print("pdf loaded from local")
+        }
+        
+        
     }
     
     // MARK: - View lif cycle

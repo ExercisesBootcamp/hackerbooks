@@ -86,7 +86,6 @@ class LibraryTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellId = "LibraryCell"
         
-        //let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
 
         let selTag = model?.tagAtIndex(indexPath.section)
         let selBook = model?.bookAtIndex(indexPath.row, tag: selTag!)
@@ -100,10 +99,26 @@ class LibraryTableViewController: UITableViewController {
         
         // Sync book into cell
         
-        let url = selBook?.imageURL
-        let data = NSData(contentsOfURL: url!)
+        let imgUrl = localFile((selBook?.title)!)
+        let img = loadLocalImage(imgUrl)
         
-        cell?.imageView?.image = UIImage(data: data!)
+        if img == nil {
+            let url = selBook?.imageURL
+            let data = NSData(contentsOfURL: url!)
+            let img = UIImage(data: data!)
+            saveImage(img!, path: imgUrl)
+            cell?.imageView?.image = img
+            
+            print("Saved")
+        } else {
+            cell?.imageView?.image = img
+            
+            print ("Local loading")
+        }
+        
+        
+        
+        
         cell?.textLabel?.text = selBook?.title
         cell?.detailTextLabel?.text = selBook?.authors
         

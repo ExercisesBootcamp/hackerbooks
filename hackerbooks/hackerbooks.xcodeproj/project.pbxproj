@@ -22,6 +22,7 @@
 		AABC5C4A1D2C33CA000C3C12 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C491D2C33CA000C3C12 /* Errors.swift */; };
 		AABC5C4C1D2C3453000C3C12 /* JSONProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C4B1D2C3453000C3C12 /* JSONProcessing.swift */; };
 		AABC5C4E1D2C3FD7000C3C12 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C4D1D2C3FD7000C3C12 /* Library.swift */; };
+		AAE033511D358AB200DCF352 /* AuxFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE033501D358AB200DCF352 /* AuxFunctions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		AABC5C491D2C33CA000C3C12 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		AABC5C4B1D2C3453000C3C12 /* JSONProcessing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONProcessing.swift; sourceTree = "<group>"; };
 		AABC5C4D1D2C3FD7000C3C12 /* Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
+		AAE033501D358AB200DCF352 /* AuxFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuxFunctions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				AA279B321D2D8E7500ABC4DC /* PDFViewController.swift */,
 				AA279B331D2D8E7500ABC4DC /* PDFViewController.xib */,
 				AA279B361D2D9E9600ABC4DC /* LibraryTableViewController.swift */,
+				AAE033501D358AB200DCF352 /* AuxFunctions.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				AABC5C481D2C3064000C3C12 /* Tag.swift in Sources */,
 				AABC5C461D2C2E86000C3C12 /* book.swift in Sources */,
 				AA279B341D2D8E7500ABC4DC /* PDFViewController.swift in Sources */,
+				AAE033511D358AB200DCF352 /* AuxFunctions.swift in Sources */,
 				AA279B301D2D567A00ABC4DC /* BookViewController.swift in Sources */,
 				AABC5C161D2C2D22000C3C12 /* AppDelegate.swift in Sources */,
 				AA279B371D2D9E9600ABC4DC /* LibraryTableViewController.swift in Sources */,
