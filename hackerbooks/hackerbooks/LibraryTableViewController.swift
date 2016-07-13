@@ -13,16 +13,32 @@ let BookKey = "key"
 
 class LibraryTableViewController: UITableViewController {
     
+    
+    
     // MARK: - Properties
     
     let model : Library?
     var delegate : LibraryTableViewControllerDelegate?
-
+    var segControl : UISegmentedControl
+    
+    
+    var tagVisible: Bool {
+        
+        get {
+            return segControl.selectedSegmentIndex == 0
+        }
+        
+    }
+    
+    
     // MARK: - Initialization
     init(model: Library){
         self.model = model
+        self.segControl = UISegmentedControl(items: ["Tags", "Title"])
         
         super.init(nibName: nil, bundle: nil)
+        
+        self.title = "Hacker Books Library"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,47 +66,70 @@ class LibraryTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        // Register Custom Cell
+        let nib = UINib(nibName: "CustomCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: CustomCell.cellId)
+        
+        // Using segmented control
+        self.segControl.selectedSegmentIndex = 0
+        self.segControl.addTarget(self, action: #selector(selectedSegmentChanged), forControlEvents: .ValueChanged)
+        
+        self.navigationItem.titleView = self.segControl
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Number of Tags
-        if let countTags = model?.tagsCount{
-            return countTags
-        }
-        return 0
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Number of books in tag
-        if let tag = model?.tagAtIndex(section){
-            return model!.booksInTag(tag.name)
+        
+        if tagVisible{
+            if let countTags = model?.tagsCount{
+                return countTags
+            }
+        } else {
+            return 1
         }
         
         return 0
     }
-
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Number of books in tag
+        
+        if tagVisible{
+            if let tag = model?.tagAtIndex(section){
+                return model!.booksInTag(tag.name)
+            }
+        } else {
+            return (model?.booksCount)!
+        }
+        
+        return 0
+        
+    }
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellId = "LibraryCell"
         
-
+        
         let selTag = model?.tagAtIndex(indexPath.section)
-        let selBook = model?.bookAtIndex(indexPath.row, tag: selTag!)
+        let selBook : Book
+        
+        if tagVisible {
+            selBook = (model?.bookAtIndex(indexPath.row, tag: selTag!))!
+        } else {
+            selBook = (model?.bookIndex(indexPath.row))!
+        }
         
         // Cell
+        //let cell : CustomCell? = tableView.dequeueReusableCellWithIdentifier(CustomCell.cellId, forIndexPath: indexPath) as? CustomCell
         var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
         
         if cell == nil{
@@ -99,12 +138,12 @@ class LibraryTableViewController: UITableViewController {
         
         // Sync book into cell
         
-        let imgUrl = localFile((selBook?.title)!)
+        let imgUrl = localFile((selBook.title))
         let img = loadLocalImage(imgUrl)
         
         if img == nil {
-            let url = selBook?.imageURL
-            let data = NSData(contentsOfURL: url!)
+            let url = selBook.imageURL
+            let data = NSData(contentsOfURL: url)
             let img = UIImage(data: data!)
             saveImage(img!, path: imgUrl)
             cell?.imageView?.image = img
@@ -117,39 +156,53 @@ class LibraryTableViewController: UITableViewController {
         }
         
         
-        
-        
-        cell?.textLabel?.text = selBook?.title
-        cell?.detailTextLabel?.text = selBook?.authors
+        cell?.textLabel?.text = selBook.title
+        cell?.detailTextLabel?.text = selBook.authors
         
         return cell!
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if let selTag = model?.tagAtIndex(section){
-            return selTag.name
+        if tagVisible{
+            if let selTag = model?.tagAtIndex(section){
+                return selTag.name
+            }
+        } else {
+            return nil
         }
         
         return nil
     }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return CustomCell.cellHeight
+    }
+    
     
     // MARK: - TableView delegate
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let selTag = model?.tagAtIndex(indexPath.section)
-        let selBook = model?.bookAtIndex(indexPath.row, tag: selTag!)
+        let selBook : Book
+        
+        if tagVisible{
+            selBook = (model?.bookAtIndex(indexPath.row, tag: selTag!))!
+        } else {
+            selBook = (model?.bookIndex(indexPath.row))!
+        }
         
         // Warn delegate
-        delegate?.libraryTableViewController(self, didSelectBook: selBook!)
+        delegate?.libraryTableViewController(self, didSelectBook: selBook)
         
         // Same warning through notification
         let nc = NSNotificationCenter.defaultCenter()
-        let notif = NSNotification(name: BookDidChangeNotification, object: self, userInfo: [BookKey: selBook!])
+        let notif = NSNotification(name: BookDidChangeNotification, object: self, userInfo: [BookKey: selBook])
         nc.postNotification(notif)
         
         
     }
+    
     
     // MARK: - Notification Utils
     
@@ -184,7 +237,15 @@ class LibraryTableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-
+    // MARK: - Segmented Control Utils
+    func selectedSegmentChanged() {
+        
+        //Scroll the TableView to the first element
+        self.tableView.scrollRectToVisible(CGRectMake(0, 0, 1, 1), animated: false)
+        self.tableView.reloadData()
+    }
+    
+    
 }
 
 protocol LibraryTableViewControllerDelegate {

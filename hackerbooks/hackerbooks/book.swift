@@ -8,10 +8,10 @@
 
 import Foundation
 
-class Book {
+class Book : Hashable, Comparable{
     
     // MARK: - Properties
-    let title : String
+    var title : String
     let author : [String]
     var tagArray : [Tag]
     let imageURL : NSURL
@@ -30,6 +30,15 @@ class Book {
         }
     }
     
+    // TODO: Quitar si no funciona
+    var hashValue: Int{
+        
+        get {
+            return title.hashValue
+        }
+        
+    }
+    
     // MARK: - Initializers
     init(title: String, author: [String], tags: [Tag], imageURL: NSURL, pdfURL: NSURL, isFavorite: Bool){
         
@@ -46,6 +55,26 @@ class Book {
         self.init(title: c.title, author: c.author, tags: c.tags, imageURL: c.imageURL, pdfURL: c.pdfURL, isFavorite: c.isFavorite)
     }
     
+    
+    // TODO: Quitar si no funciona
+    // MARK: - Proxies
+    
+    var proxyForSorting : String{
+        get {
+            return "A\(title)"
+        }
+    }
+    
+}
+// TODO: - Quitar si no funciona
+// MARK: - Equatable & Comparable
+
+func == (lhs: Book, rhs: Book) -> Bool {
+    return lhs.hashValue == rhs.hashValue
+}
+
+func <(lhs: Book, rhs: Book) -> Bool {
+    return (lhs.proxyForSorting < rhs.proxyForSorting)
 }
 
 // MARK: - Extensions

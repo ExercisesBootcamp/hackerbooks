@@ -11,9 +11,9 @@ import Foundation
 class Library : NSObject {
     
     // MARK: - Properties
-    
-    var books : [Book]
     var tagArray : [Tag]?
+    var books : [Book]
+    
     var tags : [Tag]? {
         get{
             if let tArray = tagArray{
@@ -52,6 +52,7 @@ class Library : NSObject {
     init(booksArray: [Book], tagArray: [Tag]){
         books = booksArray
         super.init()
+        books = orderBooks(books)!
         tags = tagArray
     }
     
@@ -99,6 +100,11 @@ class Library : NSObject {
             return tagBooks[index]
         }
         return nil
+    }
+    
+    func bookIndex(index: Int) -> Book?{
+        
+        return books[index]
     }
     
     func tagAtIndex(raw: Int) -> Tag?{
@@ -167,6 +173,15 @@ class Library : NSObject {
         
         
         return nil
+    }
+    
+    // MARK: - Utils
+    func orderBooks(books: [Book]) -> [Book]?{
+        let orderedBooks = books.sort{
+            $0.0.title.lowercaseString < $0.1.title.lowercaseString
+        }
+        
+        return orderedBooks
     }
     
 }
