@@ -115,9 +115,7 @@ class LibraryTableViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        //let cellId = "LibraryCell"
-        
-        
+
         let selTag = model?.tagAtIndex(indexPath.section)
         let selBook : Book
         
@@ -129,11 +127,6 @@ class LibraryTableViewController: UITableViewController {
         
         // Cell
         let cell : CustomCell? = tableView.dequeueReusableCellWithIdentifier(CustomCell.cellId, forIndexPath: indexPath) as? CustomCell
-        //var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
-        
-//        if cell == nil{
-//            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellId)
-//        }
         
         // Sync book into cell
         
@@ -191,13 +184,19 @@ class LibraryTableViewController: UITableViewController {
             selBook = (model?.bookIndex(indexPath.row))!
         }
         
-        // Warn delegate
-        delegate?.libraryTableViewController(self, didSelectBook: selBook)
-        
-        // Same warning through notification
-        let nc = NSNotificationCenter.defaultCenter()
-        let notif = NSNotification(name: BookDidChangeNotification, object: self, userInfo: [BookKey: selBook])
-        nc.postNotification(notif)
+        // Working with devices
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad{
+            // Warn delegate
+            delegate?.libraryTableViewController(self, didSelectBook: selBook)
+            
+            // Same warning through notification
+            let nc = NSNotificationCenter.defaultCenter()
+            let notif = NSNotification(name: BookDidChangeNotification, object: self, userInfo: [BookKey: selBook])
+            nc.postNotification(notif)
+        } else {
+            let bookVC = BookViewController(model: selBook)
+            self.navigationController?.pushViewController(bookVC, animated: true)
+        }
         
         
     }

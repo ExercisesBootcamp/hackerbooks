@@ -26,9 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         func decodeJSON() ->[Book]?{
             
             var result : [Book]? = nil
-            // Obtener la url del fichero
-            // Leemos el fichero JSON a un NSDATA (esto puede salir mal)
-            // Lo parseamos
+            // Getting JSON URL, reading and parse it.
             do{
                 let documents = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
                 let writePath = documents.stringByAppendingString("/books_readable.json")
@@ -40,7 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         data = NSData(contentsOfURL: url),
                         booksArray = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONArray{
                                 saveData(data)
-                        // Todo es fabuloso!!!
                         result = decode(books: booksArray)
                         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FirstLaunch")
                     }
@@ -51,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FirstLaunch")
                 }
             }catch{
-                // Error al parsear el JSON
+                // Something wrong working with JSON
                 fatalError()
             }
             
@@ -79,21 +76,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Library Navigation
         let libraryNav = UINavigationController(rootViewController: libraryVC)
         
-        // Book VC
-        let bookVC = BookViewController(model: (model?.bookAtIndex(0, tag: (model?.tagAtIndex(0))!))!)
-        
-        // Auxiliar navigation
-        let bookNav = UINavigationController(rootViewController: bookVC)
-        
-        // Split View Controller
-        let splitVC = UISplitViewController()
-        splitVC.viewControllers = [libraryNav, bookNav]
-        
-        // split as root
-        window?.rootViewController = splitVC
-        
-        // Delegates
-        libraryVC.delegate = bookVC
+        // Working with devices
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            
+            // Book VC
+            let bookVC = BookViewController(model: (model?.bookAtIndex(0, tag: (model?.tagAtIndex(0))!))!)
+            
+            // Auxiliar navigation
+            let bookNav = UINavigationController(rootViewController: bookVC)
+            
+            // Split View Controller
+            let splitVC = UISplitViewController()
+            splitVC.viewControllers = [libraryNav, bookNav]
+            
+            // split as root
+            window?.rootViewController = splitVC
+            
+            // Delegates
+            libraryVC.delegate = bookVC
+        } else {
+            window?.rootViewController = libraryNav
+        }
         
         // visible and key
         window?.makeKeyAndVisible()

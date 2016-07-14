@@ -18,7 +18,7 @@ class Library : NSObject {
         get{
             if let tArray = tagArray{
                 
-                // Sorting tags and adding Favorites.
+                // Sorting tags and adding Favorite tag.
                 var orderedTags = tArray.sort {
                     $0.0.name.lowercaseString < $0.1.name.lowercaseString
                 }
@@ -52,7 +52,7 @@ class Library : NSObject {
     init(booksArray: [Book], tagArray: [Tag]){
         books = booksArray
         super.init()
-        books = orderBooks(books)!
+        books = orderBooks(books)! // Order by Title, using aux function
         tags = tagArray
     }
     
@@ -113,67 +113,7 @@ class Library : NSObject {
         }
         return nil
     }
-    
-    
-    // MARK: - Loading JSON
-    func decodeJSON() ->[Book]?{
-        
-        var result : [Book]? = nil
-        // Obtener la url del fichero
-        // Leemos el fichero JSON a un NSDATA (esto puede salir mal)
-        // Lo parseamos
-        do{
-            let documents = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-            let writePath = documents.stringByAppendingString("/books_readable.json")
-            
-            let firstLaunch = !NSUserDefaults.standardUserDefaults().boolForKey("FirstLaunch")
-            let fileExist = NSFileManager.defaultManager().fileExistsAtPath(writePath)
-            if firstLaunch {
-                if let url = NSURL(string: "https://t.co/K9ziV0z3SJ"),
-                    data = NSData(contentsOfURL: url),
-                    booksArray = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONArray{
-                    saveData(data)
-                    // Todo es fabuloso!!!
-                    result = decode(books: booksArray)
-                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "FirstLaunch")
-                }
-            }
-            else if fileExist {
-                result = try loadJSONLocally()
-            }else{
-                NSUserDefaults.standardUserDefaults().setBool(false, forKey: "FirstLaunch")
-            }
-        }catch{
-            // Error al parsear el JSON
-            fatalError()
-        }
-        
-        return result;
-        
-    }
-    
-    func saveData(data: NSData){
-        let documents = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let writePath = NSURL(fileURLWithPath: documents).URLByAppendingPathComponent("books_readable.json")
-        data.writeToURL(writePath, atomically: false)
-    }
-    
-    func loadJSONLocally() throws -> [Book]?{
-        do{
-            let documents = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-            let writePath = NSURL(fileURLWithPath: documents).URLByAppendingPathComponent("books_readable.json")
-            if let data = NSData(contentsOfURL: writePath),
-                booksArray = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONArray{
-                // Todo es fabuloso!!!
-                return decode(books: booksArray)
-            }
-        }catch{
-            fatalError()
-        }
-        
-        
-        return nil
-    }
+
     
     // MARK: - Utils
     func orderBooks(books: [Book]) -> [Book]?{

@@ -55,8 +55,6 @@ class Book : Hashable, Comparable{
         self.init(title: c.title, author: c.author, tags: c.tags, imageURL: c.imageURL, pdfURL: c.pdfURL, isFavorite: c.isFavorite)
     }
     
-    
-    // TODO: Quitar si no funciona
     // MARK: - Proxies
     
     var proxyForSorting : String{
@@ -66,7 +64,7 @@ class Book : Hashable, Comparable{
     }
     
 }
-// TODO: - Quitar si no funciona
+
 // MARK: - Equatable & Comparable
 
 func == (lhs: Book, rhs: Book) -> Bool {
