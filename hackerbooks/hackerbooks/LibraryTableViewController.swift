@@ -38,7 +38,7 @@ class LibraryTableViewController: UITableViewController {
         
         super.init(nibName: nil, bundle: nil)
         
-        self.title = "Hacker Books Library"
+        self.title = "HackerBooks"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,6 +46,19 @@ class LibraryTableViewController: UITableViewController {
     }
     
     // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Register Custom Cell
+        let nib = UINib(nibName: "CustomCell", bundle: nil)
+        self.tableView.registerNib(nib, forCellReuseIdentifier: CustomCell.cellId)
+        
+        // Using segmented control
+        self.segControl.selectedSegmentIndex = 0
+        self.segControl.addTarget(self, action: #selector(selectedSegmentChanged), forControlEvents: .ValueChanged)
+        
+        self.navigationItem.titleView = self.segControl
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -62,20 +75,6 @@ class LibraryTableViewController: UITableViewController {
         
         let center = NSNotificationCenter.defaultCenter()
         center.removeObserver(self)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Register Custom Cell
-        let nib = UINib(nibName: "CustomCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: CustomCell.cellId)
-        
-        // Using segmented control
-        self.segControl.selectedSegmentIndex = 0
-        self.segControl.addTarget(self, action: #selector(selectedSegmentChanged), forControlEvents: .ValueChanged)
-        
-        self.navigationItem.titleView = self.segControl
     }
     
     override func didReceiveMemoryWarning() {
@@ -116,7 +115,7 @@ class LibraryTableViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellId = "LibraryCell"
+        //let cellId = "LibraryCell"
         
         
         let selTag = model?.tagAtIndex(indexPath.section)
@@ -129,12 +128,12 @@ class LibraryTableViewController: UITableViewController {
         }
         
         // Cell
-        //let cell : CustomCell? = tableView.dequeueReusableCellWithIdentifier(CustomCell.cellId, forIndexPath: indexPath) as? CustomCell
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
+        let cell : CustomCell? = tableView.dequeueReusableCellWithIdentifier(CustomCell.cellId, forIndexPath: indexPath) as? CustomCell
+        //var cell = tableView.dequeueReusableCellWithIdentifier(cellId)
         
-        if cell == nil{
-            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellId)
-        }
+//        if cell == nil{
+//            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellId)
+//        }
         
         // Sync book into cell
         
@@ -146,7 +145,7 @@ class LibraryTableViewController: UITableViewController {
             let data = NSData(contentsOfURL: url)
             let img = UIImage(data: data!)
             saveImage(img!, path: imgUrl)
-            cell?.imageView?.image = img
+            cell?.bookImage.image = img
             
             print("Saved")
         } else {
@@ -156,8 +155,8 @@ class LibraryTableViewController: UITableViewController {
         }
         
         
-        cell?.textLabel?.text = selBook.title
-        cell?.detailTextLabel?.text = selBook.authors
+        cell?.bookName.text = selBook.title
+        cell?.bookAuthors.text = selBook.authors
         
         return cell!
     }

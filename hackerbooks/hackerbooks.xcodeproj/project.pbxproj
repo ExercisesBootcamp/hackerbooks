@@ -13,6 +13,7 @@
 		AA279B351D2D8E7500ABC4DC /* PDFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA279B331D2D8E7500ABC4DC /* PDFViewController.xib */; };
 		AA279B371D2D9E9600ABC4DC /* LibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA279B361D2D9E9600ABC4DC /* LibraryTableViewController.swift */; };
 		AA4733B31D36FFEF00DDCD0B /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4733B21D36FFEF00DDCD0B /* CustomCell.swift */; };
+		AA7A4A2E1D37EB9A00C1C83E /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA7A4A2D1D37EB9A00C1C83E /* CustomCell.xib */; };
 		AABC5C161D2C2D22000C3C12 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABC5C151D2C2D22000C3C12 /* AppDelegate.swift */; };
 		AABC5C1D1D2C2D22000C3C12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AABC5C1C1D2C2D22000C3C12 /* Assets.xcassets */; };
 		AABC5C201D2C2D22000C3C12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AABC5C1E1D2C2D22000C3C12 /* LaunchScreen.storyboard */; };
@@ -50,6 +51,7 @@
 		AA279B331D2D8E7500ABC4DC /* PDFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PDFViewController.xib; sourceTree = "<group>"; };
 		AA279B361D2D9E9600ABC4DC /* LibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryTableViewController.swift; sourceTree = "<group>"; };
 		AA4733B21D36FFEF00DDCD0B /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		AA7A4A2D1D37EB9A00C1C83E /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		AABC5C121D2C2D21000C3C12 /* hackerbooks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hackerbooks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AABC5C151D2C2D22000C3C12 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AABC5C1C1D2C2D22000C3C12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				AA4733B21D36FFEF00DDCD0B /* CustomCell.swift */,
+				AA7A4A2D1D37EB9A00C1C83E /* CustomCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA7A4A2E1D37EB9A00C1C83E /* CustomCell.xib in Resources */,
 				AABC5C201D2C2D22000C3C12 /* LaunchScreen.storyboard in Resources */,
 				AABC5C1D1D2C2D22000C3C12 /* Assets.xcassets in Resources */,
 				AA279B311D2D567A00ABC4DC /* BookViewController.xib in Resources */,

@@ -11,7 +11,7 @@ import UIKit
 class CustomCell: UITableViewCell {
     
     static let cellId: String = "CustomCell"
-    static let cellHeight: CGFloat = 65
+    static let cellHeight: CGFloat = 50
     
     @IBOutlet weak var bookName: UILabel!
     @IBOutlet weak var bookAuthors: UILabel!
